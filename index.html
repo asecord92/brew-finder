@@ -12,22 +12,29 @@
     </head>
     <body>
         <div class="columns is-centered">
-            <header class="column ">
+            <header class="column">
                 <h1>BREW FINDER</h1>
             </header>
         </div>
         <div class="containter">
-            <div class="columns is-mobile is-centered is-variable is-8">
-                <div class="column is-3">
+            <div class="columns is-centered is-8 is-gapless">
+                <div class="column is-one-quarter">
                     <section id="find-brew" >
                         <h2>Find a Brewery</h2>
-                        <div class="search-brews control has-icons-left">
-                            <input class="input is-large" type="text" placeholder="Search For a Location" control-id="ControlID-1">
-                            <span class="icon is-medium is-left">
-                                <i class ="fa fa-search">
-                                    <ion-icon name="search-outline"></ion-icon> 
-                                </i>
-                            </span>
+                        <div class="control has-icons-left has-icons-right">
+                            <div class="search-input">
+                                <input id="search-brews" class="search-brews input is-large is-rounded " type="text" placeholder="Search For a Location" control-id="ControlID-1">
+                                <span class="icon is-medium is-left">
+                                    <i class ="fa fa-search">
+                                        <ion-icon name="search-outline"></ion-icon> 
+                                    </i>
+                                </span>
+                                <span class="icon is-medium is-right">
+                                    <i class="fa fa-enter" type="submit">
+                                        <ion-icon name="navigate-circle-outline" id="searchBtn"></ion-icon>
+                                    </i>
+                                </span>
+                            </div>
                         </div>
                     </section>
                     <section id="recent-searches">
@@ -36,7 +43,7 @@
                     </section>
                 </div>
                 <div class="column is-8">
-                    <div class="columns is-mobile is-centered is-variable is-8">
+                    <div class="columns is-centered is-two-thirds is-gapless">
                         <section id="brew-name" class="column is-half">
                             <h2>Example Brew Name</h2>
                             <p class="brew-description"></p>
@@ -46,12 +53,14 @@
                             <div class="map"></div>
                         </section>
                     </div>
-                        <section id="fav-brews" class="column is-full">
+                    <div class="columns is-gapless ">
+                        <section id="fav-brews" class="column is-full mt-0 ">
                             <h3>Favorites:</h3>
                             <div id="fav1" class="fav"></div>
                             <div id="fav1" class="fav"></div>
                             <div id="fav1" class="fav"></div>
                         </section>
+                    </div>
                 </div>
             </div>
         </div>
