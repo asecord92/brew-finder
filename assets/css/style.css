@@ -37,7 +37,10 @@ h3 {
     color: rgba(63, 17, 17, 100);
     font-size: 28px;    
 }
-
+.brew-description {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 #find-brew {
     height: 275px;
     margin: 20px;
@@ -95,7 +98,7 @@ h3 {
         height:1px;
     }
 
-    #brew-name, #location, #fav-brews, {
+    #brew-name, #location, #fav-brews {
         max-width: screen;
     }
 }
