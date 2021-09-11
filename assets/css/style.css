@@ -5,23 +5,21 @@ body {
 
 
 header {
-    height: 139px;
-    line-height: 20px;
+    height: 150px;
     border-radius: 20px;
     background-color: rgba(131, 118, 107, 100);
-    text-align: center;
     box-shadow: 4px 5px 10px 0px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(187, 187, 187, 100);
 }
 
-header h1 {
-    padding-left: 150px;
-    padding-top: 55px;
+header h1{
     color: rgba(239, 221, 65, 100);
     font-size: 100px;
-    text-align: justify;
     font-family: 'Anton', sans-serif;
+    display: inline;
+    text-align: start;
 }
+
 
 h2 {
     color: rgba(63, 17, 17, 100);
@@ -83,3 +81,52 @@ h3 {
     max-width: screen;
 }
 
+.brew-description {
+    background-color: rgb(242, 204, 53);
+    width: 90%;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    header h1{
+        font-size: 96px;
+        font-family: 'Anton', sans-serif;
+        display: inline;
+        text-align: center;
+    }
+
+    header {
+        text-align: center;
+    }
+    
+    header img{
+        height: 80px;
+        width: 80px;
+    }
+    
+    h2, h3 {
+        font-size: 42px;
+    }
+
+    #recent-searches {
+        visibility: hidden;
+        height: 0;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    header {
+        height: 100px;
+        border-radius: 20px;
+        background-color: rgba(131, 118, 107, 100);
+        box-shadow: 4px 5px 10px 0px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(187, 187, 187, 100);
+    }
+
+    header h1{
+        font-size: 64px;
+        font-family: 'Anton', sans-serif;
+        display: block;
+        text-align: center;
+    }
+}
