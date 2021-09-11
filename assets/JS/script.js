@@ -14,7 +14,6 @@ function getBrew(city) {
     let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=3" +"&by_type=brewpub";
 
     console.log(brewApi);
-
     fetch(brewApi).then((response)=>{
         if (response.ok){
             response.json().then(function(brews) {
@@ -25,16 +24,26 @@ function getBrew(city) {
 }
 
 function displayBrew (brews){
-    let brewLoc = document.createElement("h2");
-    brewLoc.innerHTML = brews[0].city + " Breweries";
-    brewColl.appendChild(brewLoc);;
+    if (typeof city==="undefined") {
+        var modal = document.querySelector('.modal');
+            modal.classList.add('is-active');
+            
+        modal.querySelector('.modal-background').addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.classList.remove('is-active');
+        })
+    } else {
+        let brewLoc = document.createElement("h2");
+        brewLoc.innerHTML = brews[0].city + " Breweries";
+        brewColl.appendChild(brewLoc);;
 
-    for(var i=0; i<brews.length; i++){
-        let brew = brews[i];
-        let brewName = document.createElement("div")
-        brewName.setAttribute("class", "brew-description")
-        brewName.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
-        brewColl.appendChild(brewName);
+        for(var i=0; i<brews.length; i++){
+            let brew = brews[i];
+            let brewName = document.createElement("div")
+            brewName.setAttribute("class", "brew-description box box-link-hover-shadow")
+            brewName.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
+            brewColl.appendChild(brewName);
+        }
     }
 }
 // Search Button Event
@@ -47,10 +56,13 @@ searchBtn.addEventListener("click", (e) => {
     
 });
 
-document.addEventListener("keyup", (e) => {
-    if (key === "Enter" {
-
-    })
+document.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        formSubmit(e);
+        searchBrew.value= "";
+        brewColl.innerText = "";
+    }
+});
 //create an empty 
 var recentSearches = [];
 
