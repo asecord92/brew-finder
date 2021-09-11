@@ -79,7 +79,7 @@ h3 {
     pointer-events: initial;
 }
 
-    #brew-name, #location, #fav-brews {
-        max-width: screen;
-    }
+#brew-name, #location, #fav-brews {
+    max-width: screen;
 }
+
