@@ -14,57 +14,55 @@
     </head>
     <body>
         <div class="columns is-centered">
-            <header class="column ">
+            <header class="column">
                 <h1>BREW FINDER</h1>
             </header>
         </div>
-        <div class="containter">
-            <div class="columns is-mobile is-centered is-variable is-8">
-                <div class="column is-3">
-                    <section id="find-brew" >
+        <div class="container.is-widescreen">
+            <div class="columns is-centered is-8 is-gapless">
+                <div class="column is-one-quarter m-4">
+                    <section id="find-brew " >
                         <h2>Find a Brewery</h2>
-                        <!-- <div  class="search-brews control has-icons-left">
-                            <input class="input is-large" type="text" placeholder="Search For a Location" control-id="ControlID-1">
-                            <div class="icon is-medium is-left">
-                                <i class ="fa fa-search">
-                                    <ion-icon name="search-outline"></ion-icon> 
-                                </i>
+                        <div class="control has-icons-left has-icons-right">
+                            <div class="search-input">
+                                <input id="search-brews" class="search-brews input is-medium is-rounded pl-5" type="text" placeholder="Search For a Location" control-id="ControlID-1">
+                                <span class="icon is-medium is-left">
+                                    <i class ="fa fa-search">
+                                        <ion-icon name="search-outline"></ion-icon> 
+                                    </i>
+                                </span>
+                                <span class="icon is-medium is-right">
+                                    <i class="fa fa-submit" type="submit">
+                                        <ion-icon name="navigate-circle-outline" id="searchBtn" class="button" type="submit"></ion-icon>
+                                    </i>
+                                </span>
                             </div>
-                            <div class= "buttons is-centered" >
-                                <button class = "fa fa-enter" id="searchBtn" type= "submit">
-                                    <ion-icon name = "checkbox-outline">
-                                    </ion-icon>
-                                </button> -->
-                                <div  class="search-brews control has-icons-left">
-                                    <input class="input is-large" id= "searchBrew" type="text" placeholder="Search For a Location" control-id="ControlID-1">
-                                    <div class="icon is-medium is-left">
-                                        <i class ="fa fa-search">
-                                            <ion-icon name="search-outline"></ion-icon> 
-                                        </i>
-                                <input class="button is-fullwidth" id= "searchBtn"type="submit" value="Submit input"
-
                         </div>
                     </section>
-                    <section id="recent-searches">
+                    <section id="recent-searches" class="mt-6 mr-2">
                         <h3>Recent Searches</h3>
                         <div class="past-brews"></div>
                     </section>
                 </div>
                 <div class="column is-8">
-                    <div class="columns is-mobile is-centered is-variable is-8">
-                        <section id="brew-name" class="column is-half">
+                    <div class="columns is-centered is-two-thirds is-gapless mb-0">
+                        <section id="brew-name" class="column is-half mt-4 ml-4 mr-2 mb-2">
+                            <h2>Breweries</h2>
+                            <p class="brew-description"></p>
                         </section>
-                        <section id="location" class="column is-half">
+                        <section id="location" class="column is-half mt-4 mx-2 mb-2">
                             <h2>Location</h2>
                             <div class="map"></div>
                         </section>
                     </div>
-                        <section id="fav-brews" class="column is-full">
+                    <div class="columns is-gapless">
+                        <section id="fav-brews" class="column is-full m-2">
                             <h3>Favorites:</h3>
                             <div id="fav1" class="fav"></div>
                             <div id="fav1" class="fav"></div>
                             <div id="fav1" class="fav"></div>
                         </section>
+                    </div>
                 </div>
             </div>
         </div>
