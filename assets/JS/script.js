@@ -15,24 +15,26 @@ function getBrew(city) {
 
     console.log(brewApi);
     fetch(brewApi).then((response)=>{
+        
         if (response.ok){
             response.json().then(function(brews) {
+                if (brews.length === 0) {
+                    var modal = document.querySelector('.modal');
+                        modal.classList.add('is-active');
+                        
+                    modal.querySelector('.modal-background').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        modal.classList.remove('is-active');
+                    })
+                } else {
                 displayBrew(brews);
+                }
             })
         }
     })
 }
 
 function displayBrew (brews){
-    if (typeof city==="undefined") {
-        var modal = document.querySelector('.modal');
-            modal.classList.add('is-active');
-            
-        modal.querySelector('.modal-background').addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.classList.remove('is-active');
-        })
-    } else {
         let brewLoc = document.createElement("h2");
         brewLoc.innerHTML = brews[0].city + " Breweries";
         brewColl.appendChild(brewLoc);;
@@ -44,7 +46,7 @@ function displayBrew (brews){
             brewName.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
             brewColl.appendChild(brewName);
         }
-    }
+
 }
 // Search Button Event
 
