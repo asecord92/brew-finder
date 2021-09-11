@@ -47,7 +47,7 @@ function displayBrew (brews){
         for(var i=0; i<brews.length; i++){
             let brew = brews[i];
             let brewName = document.createElement("div")
-            brewName.setAttribute("class", "brew-description box box-link-hover-shadow")
+            brewName.setAttribute("class", "brew-description box ml-auto mr-auto")
             brewName.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
             brewColl.appendChild(brewName);
         }
