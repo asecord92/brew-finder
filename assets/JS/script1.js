@@ -46,6 +46,11 @@ searchBtn.addEventListener("click", (e) => {
 
     
 });
+
+document.addEventListener("keyup", (e) => {
+    if (key === "Enter" {
+
+    })
 //create an empty 
 var recentSearches = [];
 
