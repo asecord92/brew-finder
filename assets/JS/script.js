@@ -21,6 +21,11 @@ function getBrew(city) {
                 if (brews.length === 0) {
                     var modal = document.querySelector('.modal');
                         modal.classList.add('is-active');
+                    
+                    var brewList = document.querySelector(".brewList");
+                        brewList = document.createElement('h2');
+                        brewList.innerHTML = "Breweries";
+                        brewColl.appendChild(brewList);
                         
                     modal.querySelector('.modal-background').addEventListener('click', function(e) {
                         e.preventDefault();
