@@ -1,13 +1,16 @@
 const searchBrew = document.getElementById("searchBrew");
 const searchBtn = document.getElementById("searchBtn");
-const brewColl = document.getElementById("brew-name");
+const brewColl = document.getElementById("brew-name-sub");
+// const brewInfo = document.getElementById("brew-name-sub");
 
 //Get Value of Search Bar
 function formSubmit(e) {
     let city = searchBrew.value.split(' ').join('_');
-        if (city) {
-            getBrew(city);
-        }
+    if (!city) {
+        enterCityError();
+    } else {
+        getBrew(city);
+    } 
 }
 
 function getBrew(city) {
@@ -19,41 +22,58 @@ function getBrew(city) {
         if (response.ok){
             response.json().then(function(brews) {
                 if (brews.length === 0) {
-                    var modal = document.querySelector('.modal');
-                        modal.classList.add('is-active');
-                    
-                    var brewList = document.querySelector(".brewList");
-                        brewList = document.createElement('h2');
-                        brewList.innerHTML = "Breweries";
-                        brewColl.appendChild(brewList);
-                        
-                    modal.querySelector('.modal-background').addEventListener('click', function(e) {
-                        e.preventDefault();
-                        modal.classList.remove('is-active');
-                    })
+                    enterCityError(city);
                 } else {
-                displayBrew(brews);
+                    displayBrew(brews);
                 }
             })
         }
     })
 }
 
+function enterCityError() {
+    var modal = document.querySelector('.modal');
+        modal.classList.add('is-active');
+        
+    modal.querySelector('.modal-background').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+    })
+}
+
+
 function displayBrew (brews){
+    brewColl.innerText = "";
+
         let brewLoc = document.createElement("h2");
         brewLoc.innerHTML = brews[0].city + " Breweries";
-        brewColl.appendChild(brewLoc);;
+        brewColl.appendChild(brewLoc);
+
+        
 
         for(var i=0; i<brews.length; i++){
             let brew = brews[i];
-            let brewName = document.createElement("div")
-            brewName.setAttribute("class", "brew-description box ml-auto mr-auto has-icons-right")
-            brewName.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
-            brewColl.appendChild(brewName);
+            
+            let brewCard=document.createElement("div")
+            brewCard.setAttribute("class","brewD control box ml-auto mr-auto pl-2 has-icons-right")
+            
 
-            let saveFavBrew = document.createElement("button")
-            saveFavBrew.setAttribute("span", "button is-dark")
+            let brewInfo = document.createElement("div")
+            brewInfo.setAttribute("class", "brew-description block pl-6")
+            brewInfo.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
+            brewCard.appendChild(brewInfo)
+
+            var faveBrewAdd = document.createElement("span")
+            faveBrewAdd.setAttribute("class", "icon is-right")
+            faveBrewAdd.innerHTML = "<ion-icon name='add-circle-outline' size='small' class='addFaveBtn icon is-right mx-auto my-auto'></ion-icon>"
+            brewCard.appendChild(faveBrewAdd)
+
+            brewColl.appendChild(brewCard);
+            
+            //<brewD><Brew Info></Brew Info><add fave></add fave></brewD>
         }
+
+        
 
 }
 // Search Button Event
@@ -61,16 +81,14 @@ function displayBrew (brews){
 searchBtn.addEventListener("click", (e) => {
     formSubmit(e);
     searchBrew.value= "";
-    brewColl.innerText = "";
-
-    
+    // brewColl.innerText = "";
 });
 
 document.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         formSubmit(e);
         searchBrew.value= "";
-        brewColl.innerText = "";
+        // brewColl.innerText = "";
     }
 });
 //create an empty 
@@ -91,4 +109,3 @@ function addtosearchbrew(id)
 {
     $('.past-brews').val(recentSearches[id]);
 }
-
