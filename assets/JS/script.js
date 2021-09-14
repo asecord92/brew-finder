@@ -3,6 +3,28 @@ const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 // const brewInfo = document.getElementById("brew-name-sub");
 
+
+function getCurrentLoc() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+}
+
+function showPosition(position) {
+    let currentLat = position.coords.latitude
+    let currentLong = position.coords.longitude
+  
+    let currentLocArr = {
+        lat: currentLat,
+        long: currentLong
+    }
+    currentLoc.push(currentLocArr);
+    console.log(currentLoc[0].lat)
+
+    
+}
+
+
 //Get Value of Search Bar
 function formSubmit(e) {
     let city = searchBrew.value.split(' ').join('_');
