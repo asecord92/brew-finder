@@ -14,7 +14,7 @@ function formSubmit(e) {
 }
 
 function getBrew(city) {
-    let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=3" +"&by_type=brewpub";
+    let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=5" +"&by_type=brewpub&sort=id:desc&sort=phone:asc";
 
     console.log(brewApi);
     fetch(brewApi).then((response)=>{
@@ -41,7 +41,7 @@ function enterCityError() {
     })
 }
 
-
+//display brew list 
 function displayBrew (brews){
     brewColl.innerText = "";
 
@@ -72,10 +72,9 @@ function displayBrew (brews){
             
             //<brewD><Brew Info></Brew Info><add fave></add fave></brewD>
         }
-
-        
-
 }
+
+
 // Search Button Event
 
 searchBtn.addEventListener("click", (e) => {
