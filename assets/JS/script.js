@@ -7,47 +7,7 @@ const brewColl = document.getElementById("brew-name-sub");
     
 
 
-function getCurrentLoc() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    }
-}
 
-
-function showPosition(position) {
-    let currentLat = position.coords.latitude
-    let currentLong = position.coords.longitude
-  
-    let currentLocArr = {
-        lat: currentLat,
-        long: currentLong
-    }
-    currentLoc.push(currentLocArr);
-    console.log(currentLoc[0].lat)
-
-    
-}
-
-
-// function getCurrentLoc() {
-//     if (navigator.geolocation) {
-//         navigator.geolocation.getCurrentPosition(showPosition);
-//     }
-// }
-
-// function showPosition(position) {
-//     let currentLat = position.coords.latitude
-//     let currentLong = position.coords.longitude
-  
-//     let currentLocArr = {
-//         lat: currentLat,
-//         long: currentLong
-//     }
-//     currentLoc.push(currentLocArr);
-//     console.log(currentLoc[0].lat)
-
-    
-// }
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
@@ -94,35 +54,6 @@ function enterCityError() {
 function displayBrew (brews){
     brewColl.innerText = "";
 
-    let brewLoc = document.createElement("h2");
-    brewLoc.innerHTML = brews[0].city + " Breweries";
-    brewColl.appendChild(brewLoc);;
-   
-    for(var i=0; i<brews.length; i++){
-        let brew = brews[i];
-
-        let locArr = {
-            lat: brew.latitude,
-            long: brew.longitude
-        }
-        brewCoordArr.push(locArr);
-
-        let brewName = document.createElement("div")
-        brewName.setAttribute("class", "brew-description")
-        brewName.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
-        brewColl.appendChild(brewName);
-
-    }
-    console.log(brewCoordArr)
-
-    let brewBtn = document.querySelectorAll(".brew-description")
-    brewBtn.forEach(brewBtn => {
-        brewBtn.addEventListener("click", (e) => {
-            
-            
-        })
-    })
-
         let brewLoc = document.createElement("h2");
         brewLoc.innerHTML = brews[0].city + " Breweries";
         brewColl.appendChild(brewLoc);
@@ -154,20 +85,6 @@ function displayBrew (brews){
 }
 
 
-}
-
-//Map
-
-function initMap() {
-    map = new google.maps.Map(mapEl, {
-      center: { lat: 37.2768768, lng:  -121.93628160000002 },
-      zoom: 11,
-    });
-  }
-
- 
-
-
 // Search Button Event
 
 searchBtn.addEventListener("click", (e) => {
@@ -197,7 +114,6 @@ function searchFunction(city){
     $.each(recentSearches, function (index, value) {
         $('.past-brews').append("<li class='historyItem'  onclick='searchBrew("+index+")'>" + value + '</li>');
     });
-    
 }
 
 function addtosearchbrew(id)
@@ -219,6 +135,3 @@ function displayLastSearch () {
 }
 
 displayLastSearch();
-
-    
-// getCurrentLoc();
