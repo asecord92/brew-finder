@@ -4,11 +4,15 @@ const brewColl = document.getElementById("brew-name-sub");
 // const brewInfo = document.getElementById("brew-name-sub");
 
 
+    
+
+
 function getCurrentLoc() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     }
 }
+
 
 function showPosition(position) {
     let currentLat = position.coords.latitude
@@ -28,10 +32,11 @@ function showPosition(position) {
 //Get Value of Search Bar
 function formSubmit(e) {
     let city = searchBrew.value.split(' ').join('_');
-    if (!city) {
+        if (!city) {
         enterCityError();
     } else {
         getBrew(city);
+        
     } 
 }
 
@@ -51,6 +56,7 @@ function getBrew(city) {
             })
         }
     })
+   
 }
 
 function enterCityError() {
@@ -94,6 +100,7 @@ function displayBrew (brews){
             
             //<brewD><Brew Info></Brew Info><add fave></add fave></brewD>
         }
+    
 }
 
 
@@ -130,3 +137,20 @@ function addtosearchbrew(id)
 {
     $('.past-brews').val(recentSearches[id]);
 }
+
+
+function displayLastSearch () {
+    let currentCity = searchBrew.value.toUpperCase();
+    if(!localStorage.getItem('currentCity') || JSON.parse(localStorage.getItem('currentCity')).length === 0){
+        window.localStorage.setItem('currentCity', JSON.stringify(currentCity));
+        return;
+    }
+
+    let lastSearch = JSON.parse(localStorage.getItem('currentCity')).split(' ').join('_');
+    getBrew(lastSearch);
+    console.log(lastSearch)
+}
+
+displayLastSearch();
+
+    
