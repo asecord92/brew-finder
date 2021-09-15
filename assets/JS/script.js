@@ -4,10 +4,6 @@ const brewColl = document.getElementById("brew-name-sub");
 // const brewInfo = document.getElementById("brew-name-sub");
 
 
-    
-
-
-
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
@@ -22,7 +18,7 @@ function formSubmit(e) {
 }
 
 function getBrew(city) {
-    let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=5" +"&by_type=brewpub&sort=id:desc&sort=phone:asc";
+    let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=3" +"&by_type=brewpub&sort=id:desc&sort=phone:asc";
 
     console.log(brewApi);
     fetch(brewApi).then((response)=>{
