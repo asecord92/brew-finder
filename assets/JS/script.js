@@ -22,7 +22,7 @@ function formSubmit(e) {
 }
 
 function getBrew(city) {
-    let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=5" +"&by_type=brewpub&sort=id:desc&sort=phone:asc";
+    let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=3" +"&by_type=brewpub&sort=id:desc&sort=phone:asc";
 
     console.log(brewApi);
     fetch(brewApi).then((response)=>{
