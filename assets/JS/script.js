@@ -1,6 +1,7 @@
 const searchBrew = document.getElementById("searchBrew");
 const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
+const mapEl = document.getElementById("map")
 // const brewInfo = document.getElementById("brew-name-sub");
 
 
@@ -129,5 +130,14 @@ function displayLastSearch () {
     getBrew(lastSearch);
     console.log(lastSearch)
 }
+
+//Map
+
+function initMap() {
+    map = new google.maps.Map(mapEl, {
+      center: { lat: 37.2768768, lng:  -121.93628160000002 },
+      zoom: 11,
+    });
+  }
 
 displayLastSearch();
