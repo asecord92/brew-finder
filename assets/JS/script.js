@@ -14,7 +14,6 @@ function formSubmit(e) {
         enterCityError();
         } else {
             getBrew(city);
-
         } 
 }
 
@@ -71,6 +70,7 @@ function displayBrew (brews){
 
             brewColl.appendChild(brewCard);
         } 
+    // mapMarkers();
 }
 
 // Search Button Event
@@ -151,12 +151,13 @@ function displayLastSearch () {
 
 function initMap() {
 
-
     map = new google.maps.Map(mapEl, {
-      center: { lat: 37.2768768, lng:  -121.93628160000002 },
+      center: { lat: 37.2768768, lng: -121.93628160000002 },
       zoom: 11,
     });
-  }
+
+    new google.maps.Marker({position:{lat: 37.2768768, lng: -121.93628160000002}, map: map});
+}
 
 displayLastSearch();
 loadRecentSearches();
