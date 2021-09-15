@@ -31,6 +31,8 @@ function showPosition(position) {
 
 //Get Value of Search Bar
 function formSubmit(e) {
+    localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
+    
     let city = searchBrew.value.split(' ').join('_');
         if (!city) {
         enterCityError();
@@ -109,6 +111,7 @@ function displayBrew (brews){
 searchBtn.addEventListener("click", (e) => {
     formSubmit(e);
     searchBrew.value= "";
+
     // brewColl.innerText = "";
 });
 
@@ -116,6 +119,7 @@ document.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         formSubmit(e);
         searchBrew.value= "";
+        
         // brewColl.innerText = "";
     }
 });
