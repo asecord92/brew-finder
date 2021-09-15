@@ -4,10 +4,6 @@ const brewColl = document.getElementById("brew-name-sub");
 // const brewInfo = document.getElementById("brew-name-sub");
 
 
-    
-
-
-
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
