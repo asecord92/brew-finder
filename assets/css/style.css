@@ -72,6 +72,13 @@ h3 {
     border: 1px solid rgba(187, 187, 187, 100);
 }
 
+#map {
+    height: 400px;
+}
+@media screen and (max-width: 724px)  {
+    header {
+        max-width: screen;
+
 .button {
     pointer-events: initial;
 }
@@ -127,6 +134,7 @@ h3 {
         font-family: 'Anton', sans-serif;
         display: inline;
         text-align: center;
+
     }
 
     header {
