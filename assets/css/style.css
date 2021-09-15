@@ -95,7 +95,7 @@ h3 {
         height:1px;
     }
 
-    #brew-name, #location, #fav-brews, {
+    #brew-name, #location, #fav-brews {
         max-width: screen;
     }
 }
