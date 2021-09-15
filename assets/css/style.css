@@ -121,6 +121,15 @@ h3 {
     color: white;
 }
 
+#map {
+    height: 300px;
+    width: 90%;
+    border-radius: 15px;
+}
+
+li {
+    list-style: none;
+}
 
 @media screen and (max-width: 768px) {
     header h1{
@@ -151,11 +160,7 @@ h3 {
     }
 }
 
-#map {
-    height: 300px;
-    width: 90%;
 
-}
 
 @media screen and (max-width: 550px) {
     header {
