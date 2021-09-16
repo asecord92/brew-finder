@@ -73,59 +73,12 @@ function displayBrew (brews){
     // mapMarkers();
 }
 
-// Search Button Event
-
-searchBtn.addEventListener("click", (e) => {
-    formSubmit(e);
-    searchFunction();
-    searchBrew.value= "";
-    // brewColl.innerText = "";
-});
-
-document.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-        formSubmit(e);
-        searchFunction();
-        searchBrew.value= "";
-        
-        // brewColl.innerText = "";
-    }
-});
-
-
-
-// function addRecentSearchCity(recentCities) {
-//     var recentCities = searchBrew.value.trim().toUpperCase();
-//     console.log(recentCities);
-//     if (recentCities) {
-//         var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
-//         var newBrew = recentCities
-//     };
-
-//     // save to local storage
-//     pastBrews.push(newBrew);
-//     window.localStorage.setItem("pastBrews",JSON.stringify(pastBrews));
+// function somthingStupid(event) {
+    
+//     getBrew(event.target.innerHTML)
 // }
-//create an empty 
-var recentSearches
 
-function searchFunction(){
-    recentSearches = [];
-    recentSearches.push($("#searchBrew").val());
-    $('#searchBrew').val("");
-    $('.past-brews').text("");
-
-    if (recentSearches) {
-        var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
-        var newBrew = recentSearches
-    };
-
-    // save to local storage
-    pastBrews.push(newBrew);
-    window.localStorage.setItem("pastBrews",JSON.stringify(pastBrews));
-    console.log(pastBrews);
-    loadRecentSearches();
-}
+// somthingStupid();
 
 // localstorage for favorites
 let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -168,55 +121,57 @@ let pasteFavorites = function(){
         console.log(favoritesConnect)
     }
     console.log(favoriteSaves)
-}// localstorage for favorites
-let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
-    // connects to the pop up brewery data
-    let favorites = document.querySelector("#brew-name")
-    // listener for the click to add to favorites
-    favorites.addEventListener("click", function(event){
-        console.log(event.target.textContent)
-        console.log(event.target)
-        console.log("please work")
-        // on click of context will start the adding process to local
-        let colllectFavs = event.target.textContent
-        // i dont really know but need another variable for it to be pushed or it will say push is not a function lol
-        //let please  = colllectFavs
-        // pushes the context into the array
-        favoriteSaves.push(colllectFavs)
-        // saves the clicked section to localstorage
-        localStorage.setItem("favorites", JSON.stringify(favoriteSaves))
-        //function to paste favorites
-        pasteFavorites();
-        //loadRecentSearches();
-    })
-// paste our favorites from local to the page
-let pasteFavorites = function(){
-    // holds everthing in our array
-    let storedFavorites = JSON.parse(localStorage.getItem("favorites"))
-    // connects to line (81) html
-    let favoritesConnect = document.querySelector("#fav")
-    // creates a button to be appened to id=fav
-    let pasteFav = document.createElement("button")
-    //make a loop to go through favorites saved
-    for ( i = 0; i < storedFavorites.length; i++){
-        console.log(storedFavorites[i])
-        // button text content
-        pasteFav.textContent = storedFavorites[i]
-        console.log(pasteFav.textContent)
-        console.log(pasteFav)
-        // append button to id=fav
-        favoritesConnect.appendChild(pasteFav)
-        console.log(favoritesConnect)
-    }
-    console.log(favoriteSaves)
 }
+
+// Search Button Event
+
+searchBtn.addEventListener("click", (e) => {
+    formSubmit(e);
+    searchFunction();
+    searchBrew.value= "";
+    // brewColl.innerText = "";
+});
+
+document.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        formSubmit(e);
+        searchFunction();
+        searchBrew.value= "";
+        
+        // brewColl.innerText = "";
+    }
+});
+
+var recentSearches
+
+function searchFunction(){
+    recentSearches = [];
+    recentSearches.push($("#searchBrew").val());
+    $('#searchBrew').val("");
+    $('.past-brews').text("");
+
+    if (recentSearches) {
+        var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
+        var newBrew = recentSearches
+    };
+
+    // save to local storage
+    pastBrews.push(newBrew);
+    window.localStorage.setItem("pastBrews",JSON.stringify(pastBrews));
+    console.log(pastBrews);
+    loadRecentSearches();
+}
+
+
 
 var loadRecentSearches = function() {
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
 
-    $.each(recentSearches, function (index, value) {
-        $('.past-brews').append("<li class='historyItem' onclick='displayBrew("+index+")'>" + value + '</li>');
+    $.each(recentSearches, function (value,index) {
+        $('.past-brews').append("<li class='historyItem' onclick='displayBrew("+index+")'>" + index + '</li>');
+        console.log(value)
     });
+    //how to get innerHTML into the display brew call?
 }
 
 
