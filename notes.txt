@@ -1,4 +1,3 @@
-
 Maybe this, except we would have to replace the GeoJSON with the Brew API for sure.
 
 let map;
