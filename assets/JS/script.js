@@ -154,6 +154,7 @@ function searchFunction(){
         var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
         var newBrew = recentSearches
     };
+    
 
     // save to local storage
     pastBrews.push(newBrew);
