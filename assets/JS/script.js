@@ -3,8 +3,6 @@ const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 
-
-
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
@@ -142,7 +140,7 @@ document.addEventListener("keypress", (e) => {
     }
 });
 
-var recentSearches
+var recentSearches;
 
 function searchFunction(){
     recentSearches = [];
@@ -161,7 +159,6 @@ function searchFunction(){
     console.log(pastBrews);
     loadRecentSearches();
 }
-
 
 
 var loadRecentSearches = function() {
@@ -194,9 +191,24 @@ function initMap() {
       center: { lat: 37.2768768, lng: -121.93628160000002 },
       zoom: 11,
     });
-
-    new google.maps.Marker({position:{lat: 37.2768768, lng: -121.93628160000002}, map: map});
 }
+
+// Need a latitude and longitude function to find the coordinates of the entered city.
+// Then take the coordinates and create map markers similar to the ones above
+/*
+function searchLatAndLngByStreet(brews){
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'city': brews }, (res, status) => {
+      console.log(res, status)
+      if (status == google.maps.GeocoderStatus.OK) {
+        return {
+          latitude: JSON.stringify(res[0].geometry.location.lat()),
+          longitude: JSON.stringify(res[0].geometry.location.lng())
+          new google.maps.Marker({position:{lat: latitude, lng: longitude}, map: map})
+        }
+      } 
+    });
+}*/
 
 displayLastSearch();
 loadRecentSearches();
