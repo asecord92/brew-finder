@@ -3,6 +3,8 @@ const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 
+let brewCoordArr = []
+
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
@@ -44,10 +46,23 @@ function enterCityError() {
 
 //display brew list 
 function displayBrew (brews){
+    console.log(brews);
     brewColl.innerText = "";
         let brewLoc = document.createElement("h2");
         brewLoc.innerHTML = brews[0].city + " Breweries";
         brewColl.appendChild(brewLoc);
+        brewCoordArr = [];
+        let locations = {
+            lat1: brews[0].latitude,
+            lng1: brews[0].longitude,
+            lat2: brews[1].latitude,
+            lng2: brews[1].longitude,
+            lat3: brews[2].latitude,
+            lng3: brews[2].longitude
+        }
+        console.log(locations)
+        brewCoordArr.push(locations);
+        console.log(brewCoordArr);
 
         for(var i=0; i<brews.length; i++){
             let brew = brews[i];
@@ -68,7 +83,7 @@ function displayBrew (brews){
 
             brewColl.appendChild(brewCard);
         } 
-    // mapMarkers();
+    brewMap();
 }
 
 // function somthingStupid(event) {
@@ -185,30 +200,49 @@ function displayLastSearch () {
 
 //Map
 
+
 function initMap() {
 
     map = new google.maps.Map(mapEl, {
       center: { lat: 37.2768768, lng: -121.93628160000002 },
       zoom: 11,
     });
-}
+};
 
-// Need a latitude and longitude function to find the coordinates of the entered city.
-// Then take the coordinates and create map markers similar to the ones above
-/*
-function searchLatAndLngByStreet(brews){
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'city': brews }, (res, status) => {
-      console.log(res, status)
-      if (status == google.maps.GeocoderStatus.OK) {
-        return {
-          latitude: JSON.stringify(res[0].geometry.location.lat()),
-          longitude: JSON.stringify(res[0].geometry.location.lng())
-          new google.maps.Marker({position:{lat: latitude, lng: longitude}, map: map})
-        }
-      } 
+function brewMap() {
+    brew1 = { lat : +brewCoordArr[0].lat1, lng: +brewCoordArr[0].lng1
+ 
+    }
+    brew2 = { lat : +brewCoordArr[0].lat2, lng: +brewCoordArr[0].lng2
+ 
+    }
+    brew3 = { lat : +brewCoordArr[0].lat3, lng: +brewCoordArr[0].lng3
+ 
+    }   
+    console.log(brew1)
+    map = new google.maps.Map(mapEl, {
+    center: brew2,
+    zoom: 10,
+    }); 
+
+let brew1Mark = new google.maps.Marker ({
+    position: brew1,
+    map: map,
     });
-}*/
+let brew2Mark = new google.maps.Marker ({
+    position: brew2,
+    map: map,
+
+});
+let brew3Mark = new google.maps.Marker ({
+    position: brew3,
+    map: map,
+});
+};
 
 displayLastSearch();
+
 loadRecentSearches();
+
+pasteFavorites();
+
