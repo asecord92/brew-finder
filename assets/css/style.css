@@ -58,11 +58,13 @@ h3 {
 }
 
 #recent-searches {
-    height: 456px;
+    height: 500px;
     border-radius: 20px;
     background-color: rgba(255, 248, 207, 100);
     text-align: center;
     border: 1px solid rgba(187, 187, 187, 100);
+
+    
 }
 
 #fav-brews {
@@ -136,6 +138,17 @@ h3 {
 
 li {
     list-style: none;
+    font-size: 25px;
+    text-align: center;
+    color: #4a4a4a;
+    text-decoration: none;
+    background-color: rgb(242, 204, 53);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+    border-radius: 15px;
+    padding-top: 10px;
+    padding-bottom:10px;
 }
 
 @media screen and (max-width: 768px) {
