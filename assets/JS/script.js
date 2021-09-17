@@ -13,8 +13,11 @@ function formSubmit(e) {
     let city = searchBrew.value.split(' ').join('_');
         if (!city) {
         enterCityError();
+        
+        
         } else {
             getBrew(city);
+
         } 
 }
 
@@ -26,8 +29,12 @@ function getBrew(city) {
             response.json().then(function(brews) {
                 if (brews.length === 0) {
                     enterCityError(city);
+                    searchBrew.value= "";
                 } else {
                     displayBrew(brews);
+                    searchFunction();
+                    searchBrew.value= "";
+                    
                 }
             })
         }
@@ -148,16 +155,17 @@ let pasteFavorites = function(){
 
 searchBtn.addEventListener("click", (e) => {
     formSubmit(e);
-    searchFunction();
-    searchBrew.value= "";
+    
+    
     // brewColl.innerText = "";
 });
 
 document.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         formSubmit(e);
-        searchFunction();
-        searchBrew.value= "";
+        
+        
+        
         
         // brewColl.innerText = "";
     }
@@ -166,12 +174,14 @@ document.addEventListener("keypress", (e) => {
 var recentSearches;
 
 function searchFunction(){
-    recentSearches = [];
+
+    recentSearches = []
+    
     recentSearches.push($("#searchBrew").val().toUpperCase());
     $('#searchBrew').val("");
     $('.past-brews').text("");
 
-    if (recentSearches) {
+     if (recentSearches) {
         var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
         var newBrew = recentSearches
     };
