@@ -107,14 +107,13 @@ let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
 let favorites = document.querySelector("#brew-name")
     // listener for the click to add to favorites
 favorites.addEventListener("click", function(event){
-        console.log(event.target.textContent)
-        console.log(event.target)
-        console.log("please work")
         // on click of context will start the adding process to local
         let colllectFavs = event.target.textContent
         // i dont really know but need another variable for it to be pushed or it will say push is not a function lol
         //let please  = colllectFavs
         // pushes the context into the array
+        favoriteSaves = favoriteSaves || [];
+
         favoriteSaves.push(colllectFavs)
         // saves the clicked section to localstorage
         localStorage.setItem("favorites", JSON.stringify(favoriteSaves))
@@ -129,17 +128,18 @@ let pasteFavorites = function(){
     // connects to line (81) html
     let favoritesConnect = document.querySelector("#fav")
     // creates a button to be appened to id=fav
-    let pasteFav = document.createElement("button")
+    let pasteFav = document.createElement("li")
+    pasteFav.setAttribute("class","favItem pr-auto pl-auto")
+
     //make a loop to go through favorites saved
     for ( i = 0; i < storedFavorites.length; i++){
-        console.log(storedFavorites[i])
+       
         // button text content
         pasteFav.textContent = storedFavorites[i]
-        console.log(pasteFav.textContent)
-        console.log(pasteFav)
+        
         // append button to id=fav
         favoritesConnect.appendChild(pasteFav)
-        console.log(favoritesConnect)
+        
     }
     console.log(favoriteSaves)
 }
@@ -210,7 +210,7 @@ function displayLastSearch () {
 function displayFavorites () {
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
     $.each(favoriteSaves, function (index,value) {
-        $('.fav').append("<li class='favItem' onclick='displayBrew("+index+")'>" + value + '</li>');
+        $('.fav').append("<li class='favItem pr-4 pl-auto mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
     });
 }
 

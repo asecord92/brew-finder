@@ -129,13 +129,28 @@ h3 {
     border-radius: 15px;
 }
 
-li {
+.historyItem {
     list-style: none;
     font-size: 25px;
     background-color: rgba(131, 118, 107, 100);
     color:white;
     border-radius: 15px;
     letter-spacing: 2px;
+}
+
+.favItem {
+    list-style: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(242, 204, 53);
+    width: 90%;
+    border-radius: 15px;
+    padding-top: 10px;
+    padding-bottom:10px;
+}
+
+.favItem ::marker {
+    
 }
 
 @media screen and (max-width: 768px) {
