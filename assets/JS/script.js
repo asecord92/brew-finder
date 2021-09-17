@@ -108,36 +108,38 @@ let favorites = document.querySelector("#brew-name")
 
 
 favorites.addEventListener("click", function(event){
-    // on click of context will start the adding process to local
-    console.log(event.target)
-    
-    let collectFavs = event.target.innerHTML;
+        // on click of context will start the adding process to local
+        let colllectFavs = event.target.textContent
+        // i dont really know but need another variable for it to be pushed or it will say push is not a function lol
+        //let please  = colllectFavs
+        // pushes the context into the array
+        favoriteSaves = favoriteSaves || [];
 
-    favoriteSaves.push(collectFavs);
-
-    // saves the clicked section to localstorage
-    localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
-    //function to paste favorites
-    pasteFavorites();
-    //loadRecentSearches();
-})
-
+        favoriteSaves.push(colllectFavs)
+        // saves the clicked section to localstorage
+        localStorage.setItem("favorites", JSON.stringify(favoriteSaves))
+        //function to paste favorites
+        pasteFavorites();
+        //loadRecentSearches();
+    })
 // paste our favorites from local to the page
 let pasteFavorites = function() {
     // holds everthing in our array
     let storedFavorites = JSON.parse(localStorage.getItem("favorites"))
     let favoritesConnect = document.querySelector("#fav")
     // creates a button to be appened to id=fav
-    let pasteFav = document.createElement("button")
+    let pasteFav = document.createElement("li")
+    pasteFav.setAttribute("class","favItem pt-2 pb-2 pl-5 mr-auto ml-auto")
+
     //make a loop to go through favorites saved
     for ( i = 0; i < storedFavorites.length; i++){
-
+       
         // button text content
         pasteFav.textContent = storedFavorites[i]
-
+        
         // append button to id=fav
         favoritesConnect.appendChild(pasteFav)
-
+        
     }
 
 }
@@ -187,8 +189,8 @@ var loadRecentSearches = function() {
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
 
     $.each(recentSearches, function (value,index) {
-        $('.past-brews').append("<li class='historyItem mb-3 mt-3' onclick='displayBrew("+index+")'>" + index + '</li>');
-
+        $('.past-brews').append("<li class='historyItem mb-3' onclick='displayBrew("+index+")'>" + index + '</li>');
+        console.log(value)
     });
     //how to get innerHTML into the display brew call?
 }
@@ -208,7 +210,7 @@ function displayLastSearch () {
 function displayFavorites () {
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
     $.each(favoriteSaves, function (index,value) {
-        $('.fav').append("<li class='favItem' onclick='displayBrew("+index+")'>" + value + '</li>');
+        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
     });
 }
 
@@ -243,8 +245,5 @@ function brewMap() {
 }
 
 displayLastSearch();
-
 loadRecentSearches();
-
-pasteFavorites();
-
+displayFavorites();
