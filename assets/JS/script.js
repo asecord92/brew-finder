@@ -73,54 +73,46 @@ function displayBrew (brews){
     // mapMarkers();
 }
 
-// function somthingStupid(event) {
-    
-//     getBrew(event.target.innerHTML)
-// }
-
-// somthingStupid();
 
 // localstorage for favorites
 let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
     // connects to the pop up brewery data
 let favorites = document.querySelector("#brew-name")
-    // listener for the click to add to favorites
+// listener for the click to add to favorites
+
+
 favorites.addEventListener("click", function(event){
-        console.log(event.target.textContent)
-        console.log(event.target)
-        console.log("please work")
-        // on click of context will start the adding process to local
-        let colllectFavs = event.target.textContent
-        // i dont really know but need another variable for it to be pushed or it will say push is not a function lol
-        //let please  = colllectFavs
-        // pushes the context into the array
-        favoriteSaves.push(colllectFavs)
-        // saves the clicked section to localstorage
-        localStorage.setItem("favorites", JSON.stringify(favoriteSaves))
-        //function to paste favorites
-        pasteFavorites();
-        //loadRecentSearches();
-    })
+    // on click of context will start the adding process to local
+    console.log(event.target)
+    
+    let collectFavs = event.target.textContent;
+    favoriteSaves.push(collectFavs);
+
+    // saves the clicked section to localstorage
+    localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
+    //function to paste favorites
+    pasteFavorites();
+    //loadRecentSearches();
+})
+
 // paste our favorites from local to the page
-let pasteFavorites = function(){
+let pasteFavorites = function() {
     // holds everthing in our array
     let storedFavorites = JSON.parse(localStorage.getItem("favorites"))
-    // connects to line (81) html
     let favoritesConnect = document.querySelector("#fav")
     // creates a button to be appened to id=fav
     let pasteFav = document.createElement("button")
     //make a loop to go through favorites saved
     for ( i = 0; i < storedFavorites.length; i++){
-        console.log(storedFavorites[i])
+
         // button text content
         pasteFav.textContent = storedFavorites[i]
-        console.log(pasteFav.textContent)
-        console.log(pasteFav)
+
         // append button to id=fav
         favoritesConnect.appendChild(pasteFav)
-        console.log(favoritesConnect)
+
     }
-    console.log(favoriteSaves)
+
 }
 
 // Search Button Event
@@ -146,7 +138,7 @@ var recentSearches
 
 function searchFunction(){
     recentSearches = [];
-    recentSearches.push($("#searchBrew").val());
+    recentSearches.push($("#searchBrew").val().toUpperCase());
     $('#searchBrew').val("");
     $('.past-brews').text("");
 
@@ -158,7 +150,7 @@ function searchFunction(){
     // save to local storage
     pastBrews.push(newBrew);
     window.localStorage.setItem("pastBrews",JSON.stringify(pastBrews));
-    console.log(pastBrews);
+
     loadRecentSearches();
 }
 
@@ -168,8 +160,8 @@ var loadRecentSearches = function() {
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
 
     $.each(recentSearches, function (value,index) {
-        $('.past-brews').append("<li class='historyItem' onclick='displayBrew("+index+")'>" + index + '</li>');
-        console.log(value)
+        $('.past-brews').append("<li class='historyItem mb-3 mt-3' onclick='displayBrew("+index+")'>" + index + '</li>');
+
     });
     //how to get innerHTML into the display brew call?
 }
@@ -201,7 +193,6 @@ function initMap() {
       center: { lat: 37.2768768, lng: -121.93628160000002 },
       zoom: 11,
     });
-
     new google.maps.Marker({position:{lat: 37.2768768, lng: -121.93628160000002}, map: map});
 }
 
