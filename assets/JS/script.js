@@ -83,9 +83,9 @@ function displayBrew (brews){
 // localstorage for favorites
 let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
     // connects to the pop up brewery data
-    let favorites = document.querySelector("#brew-name")
+let favorites = document.querySelector("#brew-name")
     // listener for the click to add to favorites
-    favorites.addEventListener("click", function(event){
+favorites.addEventListener("click", function(event){
         console.log(event.target.textContent)
         console.log(event.target)
         console.log("please work")
@@ -186,6 +186,13 @@ function displayLastSearch () {
     getBrew(lastSearch);
 }
 
+function displayFavorites () {
+    favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
+    $.each(favoriteSaves, function (index,value) {
+        $('.fav').append("<li class='favItem' onclick='displayBrew("+index+")'>" + value + '</li>');
+    });
+}
+
 //Map
 
 function initMap() {
@@ -200,3 +207,4 @@ function initMap() {
 
 displayLastSearch();
 loadRecentSearches();
+displayFavorites();
