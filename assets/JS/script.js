@@ -49,8 +49,14 @@ function enterCityError() {
     modal.querySelector('.modal-background').addEventListener('click', function(e) {
         e.preventDefault();
         modal.classList.remove('is-active');
-    })
-}
+    });
+    modal.querySelector('.modal-close').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+
+    });
+};
+
 
 //display brew list 
 function displayBrew (brews){
