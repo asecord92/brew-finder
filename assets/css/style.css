@@ -135,7 +135,7 @@ li {
     background-color: rgba(131, 118, 107, 100);
     color:white;
     border-radius: 15px;
-
+    letter-spacing: 2px;
 }
 
 @media screen and (max-width: 768px) {
