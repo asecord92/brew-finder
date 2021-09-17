@@ -129,7 +129,7 @@ let pasteFavorites = function(){
     let favoritesConnect = document.querySelector("#fav")
     // creates a button to be appened to id=fav
     let pasteFav = document.createElement("li")
-    pasteFav.setAttribute("class","favItem pr-auto pl-auto")
+    pasteFav.setAttribute("class","favItem pt-2 pb-2 pl-5 mr-auto ml-auto")
 
     //make a loop to go through favorites saved
     for ( i = 0; i < storedFavorites.length; i++){
@@ -210,7 +210,7 @@ function displayLastSearch () {
 function displayFavorites () {
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
     $.each(favoriteSaves, function (index,value) {
-        $('.fav').append("<li class='favItem pr-4 pl-auto mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
+        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
     });
 }
 

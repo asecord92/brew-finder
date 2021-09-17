@@ -68,10 +68,11 @@ h3 {
 }
 
 #fav-brews {
-    height: 288px;
+    height: fit-content;
     border-radius: 20px;
     background-color: rgba(255, 248, 207, 100);
     border: 1px solid rgba(187, 187, 187, 100);
+    min-height: 327px;
 }
 
 .button {
@@ -145,11 +146,6 @@ h3 {
     background-color: rgb(242, 204, 53);
     width: 90%;
     border-radius: 15px;
-    padding-top: 10px;
-    padding-bottom:10px;
-}
-
-.favItem ::marker {
     
 }
 
