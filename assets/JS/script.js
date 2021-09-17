@@ -42,6 +42,11 @@ function enterCityError() {
         e.preventDefault();
         modal.classList.remove('is-active');
     })
+
+    modal.querySelector('.modal-close').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+    })
 }
 
 //display brew list 
@@ -85,7 +90,8 @@ favorites.addEventListener("click", function(event){
     // on click of context will start the adding process to local
     console.log(event.target)
     
-    let collectFavs = event.target.textContent;
+    let collectFavs = event.target.innerHTML;
+
     favoriteSaves.push(collectFavs);
 
     // saves the clicked section to localstorage
