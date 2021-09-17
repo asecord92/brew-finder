@@ -132,16 +132,10 @@ h3 {
 li {
     list-style: none;
     font-size: 25px;
-    text-align: center;
-    color: #4a4a4a;
-    text-decoration: none;
-    background-color: rgb(242, 204, 53);
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 90%;
+    background-color: rgba(131, 118, 107, 100);
+    color:white;
     border-radius: 15px;
-    padding-top: 10px;
-    padding-bottom:10px;
+
 }
 
 @media screen and (max-width: 768px) {

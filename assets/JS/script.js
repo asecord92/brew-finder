@@ -167,7 +167,7 @@ var recentSearches;
 
 function searchFunction(){
     recentSearches = [];
-    recentSearches.push($("#searchBrew").val());
+    recentSearches.push($("#searchBrew").val().toUpperCase());
     $('#searchBrew').val("");
     $('.past-brews').text("");
 
@@ -189,7 +189,7 @@ var loadRecentSearches = function() {
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
 
     $.each(recentSearches, function (value,index) {
-        $('.past-brews').append("<li class='historyItem' onclick='displayBrew("+index+")'>" + index + '</li>');
+        $('.past-brews').append("<li class='historyItem mb-3' onclick='displayBrew("+index+")'>" + index + '</li>');
         console.log(value)
     });
     //how to get innerHTML into the display brew call?
