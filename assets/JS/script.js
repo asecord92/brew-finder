@@ -238,14 +238,13 @@ function brewMap() {
         position: brew,
         map: map,
         });
-};
-};
-
+    };
+    };
+}
 
 displayLastSearch();
 
 loadRecentSearches();
 
 pasteFavorites();
-
 
