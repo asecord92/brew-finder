@@ -3,6 +3,7 @@ const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 
+let brewCoordArr = []
 
 
 //Get Value of Search Bar
@@ -46,14 +47,29 @@ function enterCityError() {
 
 //display brew list 
 function displayBrew (brews){
+    console.log(brews);
     brewColl.innerText = "";
         let brewLoc = document.createElement("h2");
         brewLoc.innerHTML = brews[0].city + " Breweries";
         brewColl.appendChild(brewLoc);
+        brewCoordArr = [];
+        // let locations = {
+        //     lat1: brews[0].latitude,
+        //     lng1: brews[0].longitude,
+        //     lat2: brews[1].latitude,
+        //     lng2: brews[1].longitude,
+        //     lat3: brews[2].latitude,
+        //     lng3: brews[2].longitude
+        // }
+        // brewCoordArr.push(locations);
+       
 
         for(var i=0; i<brews.length; i++){
             let brew = brews[i];
-            
+            let locations = {
+                lat: brew.latitude,
+                lng: brew.longitude
+            }
             let brewCard=document.createElement("div")
             brewCard.setAttribute("class","brewD control box ml-auto mr-auto pl-2 has-icons-right")
             
@@ -69,8 +85,13 @@ function displayBrew (brews){
             brewCard.appendChild(faveBrewAdd)
 
             brewColl.appendChild(brewCard);
+          
+            if (locations.lat != null){
+                brewCoordArr.push(locations);
+            }
         } 
-    // mapMarkers();
+        console.log(brewCoordArr);
+    brewMap();
 }
 
 
@@ -134,7 +155,7 @@ document.addEventListener("keypress", (e) => {
     }
 });
 
-var recentSearches
+var recentSearches;
 
 function searchFunction(){
     recentSearches = [];
@@ -146,6 +167,7 @@ function searchFunction(){
         var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
         var newBrew = recentSearches
     };
+    
 
     // save to local storage
     pastBrews.push(newBrew);
@@ -153,7 +175,6 @@ function searchFunction(){
 
     loadRecentSearches();
 }
-
 
 
 var loadRecentSearches = function() {
@@ -187,15 +208,38 @@ function displayFavorites () {
 
 //Map
 
+
 function initMap() {
 
     map = new google.maps.Map(mapEl, {
       center: { lat: 37.2768768, lng: -121.93628160000002 },
       zoom: 11,
     });
-    new google.maps.Marker({position:{lat: 37.2768768, lng: -121.93628160000002}, map: map});
-}
+
+
+function brewMap() {
+    let centerLoc = { lat : +brewCoordArr[0].lat, lng: +brewCoordArr[0].lng
+    };  
+    map = new google.maps.Map(mapEl, {
+        center: centerLoc,
+        zoom: 10,
+    }); 
+    for(var i=0; i< brewCoordArr.length; i++){
+     brew = { lat : +brewCoordArr[i].lat, lng: +brewCoordArr[i].lng
+     }  
+     
+    let brewMark = new google.maps.Marker ({
+        position: brew,
+        map: map,
+        });
+};
+};
+
 
 displayLastSearch();
+
 loadRecentSearches();
-displayFavorites();
+
+pasteFavorites();
+
+
