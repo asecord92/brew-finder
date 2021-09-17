@@ -5,6 +5,7 @@ const mapEl = document.getElementById("map");
 
 let brewCoordArr = []
 
+
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
@@ -52,21 +53,23 @@ function displayBrew (brews){
         brewLoc.innerHTML = brews[0].city + " Breweries";
         brewColl.appendChild(brewLoc);
         brewCoordArr = [];
-        let locations = {
-            lat1: brews[0].latitude,
-            lng1: brews[0].longitude,
-            lat2: brews[1].latitude,
-            lng2: brews[1].longitude,
-            lat3: brews[2].latitude,
-            lng3: brews[2].longitude
-        }
-        console.log(locations)
-        brewCoordArr.push(locations);
-        console.log(brewCoordArr);
+        // let locations = {
+        //     lat1: brews[0].latitude,
+        //     lng1: brews[0].longitude,
+        //     lat2: brews[1].latitude,
+        //     lng2: brews[1].longitude,
+        //     lat3: brews[2].latitude,
+        //     lng3: brews[2].longitude
+        // }
+        // brewCoordArr.push(locations);
+       
 
         for(var i=0; i<brews.length; i++){
             let brew = brews[i];
-            
+            let locations = {
+                lat: brew.latitude,
+                lng: brew.longitude
+            }
             let brewCard=document.createElement("div")
             brewCard.setAttribute("class","brewD control box ml-auto mr-auto pl-2 has-icons-right")
             
@@ -82,7 +85,12 @@ function displayBrew (brews){
             brewCard.appendChild(faveBrewAdd)
 
             brewColl.appendChild(brewCard);
+          
+            if (locations.lat != null){
+                brewCoordArr.push(locations);
+            }
         } 
+        console.log(brewCoordArr);
     brewMap();
 }
 
@@ -211,35 +219,23 @@ function initMap() {
 };
 
 function brewMap() {
-    brew1 = { lat : +brewCoordArr[0].lat1, lng: +brewCoordArr[0].lng1
- 
-    }
-    brew2 = { lat : +brewCoordArr[0].lat2, lng: +brewCoordArr[0].lng2
- 
-    }
-    brew3 = { lat : +brewCoordArr[0].lat3, lng: +brewCoordArr[0].lng3
- 
-    }   
-    console.log(brew1)
+    let centerLoc = { lat : +brewCoordArr[0].lat, lng: +brewCoordArr[0].lng
+    };  
     map = new google.maps.Map(mapEl, {
-    center: brew2,
-    zoom: 10,
+        center: centerLoc,
+        zoom: 10,
     }); 
-
-let brew1Mark = new google.maps.Marker ({
-    position: brew1,
-    map: map,
-    });
-let brew2Mark = new google.maps.Marker ({
-    position: brew2,
-    map: map,
-
-});
-let brew3Mark = new google.maps.Marker ({
-    position: brew3,
-    map: map,
-});
+    for(var i=0; i< brewCoordArr.length; i++){
+     brew = { lat : +brewCoordArr[i].lat, lng: +brewCoordArr[i].lng
+     }  
+     
+    let brewMark = new google.maps.Marker ({
+        position: brew,
+        map: map,
+        });
 };
+};
+
 
 displayLastSearch();
 
