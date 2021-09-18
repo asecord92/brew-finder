@@ -13,11 +13,8 @@ function formSubmit(e) {
     let city = searchBrew.value.split(' ').join('_');
         if (!city) {
         enterCityError();
-        
-        
         } else {
             getBrew(city);
-
         } 
 }
 
@@ -29,12 +26,8 @@ function getBrew(city) {
             response.json().then(function(brews) {
                 if (brews.length === 0) {
                     enterCityError(city);
-                    searchBrew.value= "";
                 } else {
                     displayBrew(brews);
-                    searchFunction();
-                    searchBrew.value= "";
-                    
                 }
             })
         }
@@ -49,14 +42,8 @@ function enterCityError() {
     modal.querySelector('.modal-background').addEventListener('click', function(e) {
         e.preventDefault();
         modal.classList.remove('is-active');
-    });
-    modal.querySelector('.modal-close').addEventListener('click', function(e) {
-        e.preventDefault();
-        modal.classList.remove('is-active');
-
-    });
-};
-
+    })
+}
 
 //display brew list 
 function displayBrew (brews){
@@ -103,8 +90,9 @@ function displayBrew (brews){
                 brewCoordArr.push(locations);
             }
         } 
-        console.log(brewCoordArr);
-    brewMap();
+
+        saveFavorite();
+        brewMap();
 }
 
 // function somthingStupid(event) {
@@ -115,11 +103,12 @@ function displayBrew (brews){
 // somthingStupid();
 
 // localstorage for favorites
-let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
+function saveFavorite () {
+    let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
     // connects to the pop up brewery data
-let favorites = document.querySelector("#brew-name")
+    let favorites = document.querySelectorAll(".brew-description")
     // listener for the click to add to favorites
-favorites.addEventListener("click", function(event){
+    favorites.forEach(favorites => { favorites.addEventListener("click", function(event){
         // on click of context will start the adding process to local
         let colllectFavs = event.target.textContent
         // i dont really know but need another variable for it to be pushed or it will say push is not a function lol
@@ -133,7 +122,11 @@ favorites.addEventListener("click", function(event){
         //function to paste favorites
         pasteFavorites();
         //loadRecentSearches();
-    })
+    });
+    });
+};
+    
+
 // paste our favorites from local to the page
 let pasteFavorites = function(){
     // holds everthing in our array
@@ -161,17 +154,16 @@ let pasteFavorites = function(){
 
 searchBtn.addEventListener("click", (e) => {
     formSubmit(e);
-    
-    
+    searchFunction();
+    searchBrew.value= "";
     // brewColl.innerText = "";
 });
 
 document.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         formSubmit(e);
-        
-        
-        
+        searchFunction();
+        searchBrew.value= "";
         
         // brewColl.innerText = "";
     }
@@ -180,14 +172,12 @@ document.addEventListener("keypress", (e) => {
 var recentSearches;
 
 function searchFunction(){
-
-    recentSearches = []
-    
+    recentSearches = [];
     recentSearches.push($("#searchBrew").val().toUpperCase());
     $('#searchBrew').val("");
     $('.past-brews').text("");
 
-     if (recentSearches) {
+    if (recentSearches) {
         var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
         var newBrew = recentSearches
     };
