@@ -4,8 +4,23 @@ const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 
 let brewCoordArr = []
+let currentLocation = []
+// Geolocation
+function getLocation() {
+    if (navigator.getLocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } 
+}
 
-
+function showPosition(){
+    let location = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    }
+    currentLocation.push(location);
+    
+}
+console.log(currentLocation)
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
@@ -249,7 +264,7 @@ function brewMap() {
 };
 };
 
-
+getLocation();
 displayLastSearch();
 loadRecentSearches();
 displayFavorites();
