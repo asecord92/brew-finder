@@ -4,8 +4,23 @@ const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 
 let brewCoordArr = []
+let currentLocation= []
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    }
+};
 
-
+function showPosition(position) {
+     let location = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+  }
+  currentLocation.push(location);
+  currentMap();
+  console.log(currentLocation)
+};
+  
 //Get Value of Search Bar
 function formSubmit(e) {
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
@@ -224,9 +239,23 @@ function displayFavorites () {
 function initMap() {
 
     map = new google.maps.Map(mapEl, {
-      center: { lat: 37.2768768, lng: -121.93628160000002 },
+      center: { lat: 37.773972, lng: -122.431297 },
       zoom: 11,
     });
+};
+
+function currentMap() {
+    let currentLoc = { lat: +currentLocation[0].lat, lng: +currentLocation[0].lng }
+    map = new google.maps.Map(mapEl, {
+      center: currentLoc,
+      zoom: 11,
+    });
+
+    let locationMark = new google.maps.Marker ({
+        position: currentLoc,
+        map: map,
+        });
+
 };
 
 function brewMap() {
@@ -247,7 +276,7 @@ function brewMap() {
 };
 };
 
-
+getLocation();
 displayLastSearch();
 loadRecentSearches();
 displayFavorites();
