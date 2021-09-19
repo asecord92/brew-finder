@@ -132,10 +132,10 @@ let pasteFavorites = function() {
     for ( i = 0; i < storedFavorites.length; i++){
        
         // button text content
-        pasteFav.innerHTML = storedFavorites[i].slice(0,1) + "<br>" +storedFavorites[i].slice(2,3);
+        pasteFav.innerHTML = storedFavorites[i].slice(0,1) + "<br>" +storedFavorites[i].slice(2,3)
         
         // append button to id=fav
-        favoritesConnect.appendChild(pasteFav);
+        favoritesConnect.appendChild(pasteFav)
         
     }
 
@@ -207,7 +207,7 @@ function displayLastSearch () {
 function displayFavorites () {
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
     $.each(favoriteSaves, function (index,value) {
-        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
+        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value.slice(0,1)+"<br>"+ value.slice(2,3)+ '</li>');
     });
 }
 
