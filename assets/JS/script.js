@@ -139,12 +139,12 @@ function saveFavorite () {
     favorites.forEach(favorites => { favorites.addEventListener("click", function(event){
     
         // on click of context will start the adding process to local
-        let colllectFavs = event.target.textContent;
+        let collectFavs = event.target.innerHTML.split("<br>");
     
         // pushes the context into the array
         favoriteSaves = favoriteSaves || [];
 
-        favoriteSaves.push(colllectFavs);
+        favoriteSaves.push(collectFavs);
         // saves the clicked section to localstorage
     
         localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
@@ -166,8 +166,8 @@ let pasteFavorites = function(){
     let favoritesConnect = document.querySelector("#fav");
     
     // creates a button to be appened to id=fav
-    let pasteFav = document.createElement("li");
-    pasteFav.setAttribute("class","favItem pt-2 pb-2 pl-5 mr-auto ml-auto");
+    let pasteFav = document.createElement("div");
+    pasteFav.setAttribute("class","favItem column is-half pt-2 pb-2 pl-5 mr-auto ml-auto");
 
     //make a loop to go through favorites saved
     for ( i = 0; i < storedFavorites.length; i++){
@@ -177,6 +177,7 @@ let pasteFavorites = function(){
         
         // append button to id=fav
         favoritesConnect.appendChild(pasteFav);   
+        
     }
 }
 
@@ -244,7 +245,7 @@ function displayFavorites () {
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
     
     $.each(favoriteSaves, function (index,value) {
-        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value.slice(0,1)+"<br>"+ value.slice(2,3)+ '</li>');
+        $('.fav').append("<div class='favItem column is-half pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew(+index+)'><a href='http://maps.google.com/?q="+ value.slice(1,2)+"' target='_blank'>" + value.slice(0,1)+"<br>"+ value.slice(2,3)+ '</a></div>');
     });
 }
 
