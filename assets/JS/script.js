@@ -77,6 +77,11 @@ function enterCityError() {
         e.preventDefault();
         modal.classList.remove('is-active');
     })
+
+    modal.querySelector('.modal-close').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+    })
 }
 
 //display brew list 
@@ -168,7 +173,7 @@ let pasteFavorites = function(){
     for ( i = 0; i < storedFavorites.length; i++){
        
         // button text content
-        pasteFav.textContent = storedFavorites[i];
+        pasteFav.innerHTML = storedFavorites[i].slice(0,1) + "<br>" +storedFavorites[i].slice(2,3)
         
         // append button to id=fav
         favoritesConnect.appendChild(pasteFav);   
@@ -239,8 +244,7 @@ function displayFavorites () {
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
     
     $.each(favoriteSaves, function (index,value) {
-    
-        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
+        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value.slice(0,1)+"<br>"+ value.slice(2,3)+ '</li>');
     });
 }
 
@@ -269,7 +273,7 @@ function currentMap() {
         position: currentLoc,
         map: map,
     });
-};
+
 
 function brewMap() {
     
@@ -290,11 +294,11 @@ function brewMap() {
     
         position: brew,
         map: map,
-    });
+        });
     };
-};
+    };
+}
 
-getLocation();
 displayLastSearch();
 loadRecentSearches();
 displayFavorites();
