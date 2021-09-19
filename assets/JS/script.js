@@ -108,14 +108,11 @@ let favorites = document.querySelector("#brew-name")
 
 
 favorites.addEventListener("click", function(event){
-        // on click of context will start the adding process to local
-        let colllectFavs = event.target.textContent
-        // i dont really know but need another variable for it to be pushed or it will say push is not a function lol
-        //let please  = colllectFavs
-        // pushes the context into the array
+        let collectFavs = event.target.innerHTML.split("<br>")
+        console.log(collectFavs)
         favoriteSaves = favoriteSaves || [];
 
-        favoriteSaves.push(colllectFavs)
+        favoriteSaves.push(collectFavs)
         // saves the clicked section to localstorage
         localStorage.setItem("favorites", JSON.stringify(favoriteSaves))
         //function to paste favorites
@@ -135,10 +132,10 @@ let pasteFavorites = function() {
     for ( i = 0; i < storedFavorites.length; i++){
        
         // button text content
-        pasteFav.textContent = storedFavorites[i]
+        pasteFav.innerHTML = storedFavorites[i].slice(0,1) + "<br>" +storedFavorites[i].slice(2,3);
         
         // append button to id=fav
-        favoritesConnect.appendChild(pasteFav)
+        favoritesConnect.appendChild(pasteFav);
         
     }
 
