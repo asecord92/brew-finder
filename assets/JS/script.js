@@ -3,46 +3,61 @@ const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 
-let brewCoordArr = []
-let currentLocation= []
+let brewCoordArr = [];
+let currentLocation= [];
+
 function getLocation() {
+    
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+    
+        navigator.geolocation.getCurrentPosition(showPosition);
     }
 };
 
 function showPosition(position) {
-     let location = {
+    
+    let location = {
+    
         lat: position.coords.latitude,
         lng: position.coords.longitude
-  }
+    }
+
   currentLocation.push(location);
   currentMap();
-  console.log(currentLocation)
 };
   
 //Get Value of Search Bar
 function formSubmit(e) {
+    
     localStorage.setItem('currentCity', JSON.stringify(searchBrew.value.toUpperCase()));
     
     let city = searchBrew.value.split(' ').join('_');
-        if (!city) {
+    
+    if (!city) {
+        
         enterCityError();
-        } else {
-            getBrew(city);
-        } 
+    } else {
+        
+        getBrew(city);
+    } 
 }
 
 function getBrew(city) {
+    
     let brewApi = "https://api.openbrewerydb.org/breweries?by_city=" + city +"&per_page=3" +"&by_type=brewpub&sort=id:desc&sort=phone:asc";
+    
     fetch(brewApi).then((response)=>{
         
         if (response.ok){
+            
             response.json().then(function(brews) {
+                
                 if (brews.length === 0) {
+                   
                     enterCityError(city);
                     searchBrew.value= "";
                 } else {
+                    
                     displayBrew(brews);
                     searchFunction();
                     searchBrew.value= "";
@@ -50,14 +65,15 @@ function getBrew(city) {
             })
         }
     })
-   
 }
 
 function enterCityError() {
+    
     var modal = document.querySelector('.modal');
-        modal.classList.add('is-active');
+    modal.classList.add('is-active');
         
     modal.querySelector('.modal-background').addEventListener('click', function(e) {
+        
         e.preventDefault();
         modal.classList.remove('is-active');
     })
@@ -65,159 +81,151 @@ function enterCityError() {
 
 //display brew list 
 function displayBrew (brews){
-    console.log(brews);
+
     brewColl.innerText = "";
-        let brewLoc = document.createElement("h2");
-        brewLoc.innerHTML = brews[0].city + " Breweries";
-        brewColl.appendChild(brewLoc);
-        brewCoordArr = [];
-        // let locations = {
-        //     lat1: brews[0].latitude,
-        //     lng1: brews[0].longitude,
-        //     lat2: brews[1].latitude,
-        //     lng2: brews[1].longitude,
-        //     lat3: brews[2].latitude,
-        //     lng3: brews[2].longitude
-        // }
-        // brewCoordArr.push(locations);
-       
-
-        for(var i=0; i<brews.length; i++){
-            let brew = brews[i];
-            let locations = {
-                lat: brew.latitude,
-                lng: brew.longitude
-            }
-            let brewCard=document.createElement("div")
-            brewCard.setAttribute("class","brewD control box ml-auto mr-auto pl-2 has-icons-right")
-            
-
-            let brewInfo = document.createElement("div")
-            brewInfo.setAttribute("class", "brew-description block pl-6")
-            brewInfo.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
-            brewCard.appendChild(brewInfo)
-
-            var faveBrewAdd = document.createElement("span")
-            faveBrewAdd.setAttribute("class", "icon is-right")
-            faveBrewAdd.innerHTML = "<ion-icon name='add-circle-outline' size='small' class='addFaveBtn"+[i]+" icon is-right mx-auto my-auto'></ion-icon>"
-            brewCard.appendChild(faveBrewAdd)
-
-            brewColl.appendChild(brewCard);
-          
-            if (locations.lat != null){
-                brewCoordArr.push(locations);
-            }
-        } 
-
-        saveFavorite();
-        brewMap();
-}
-
-// function somthingStupid(event) {
+    let brewLoc = document.createElement("h2");
+    brewLoc.innerHTML = brews[0].city + " Breweries";
+    brewColl.appendChild(brewLoc);
+    brewCoordArr = [];
     
-//     getBrew(event.target.innerHTML)
-// }
+    for(var i=0; i<brews.length; i++){
+        
+        let brew = brews[i];
+        let locations = {
+        
+            lat: brew.latitude,
+            lng: brew.longitude
+        }
+        
+        let brewCard=document.createElement("div");
+        brewCard.setAttribute("class","brewD control box ml-auto mr-auto pl-2 has-icons-right");
+        
+        let brewInfo = document.createElement("div");
+        brewInfo.setAttribute("class", "brew-description block pl-6");
+        brewInfo.innerHTML = brew.name + "<br>" + brew.street + "<br>" + brew.city + ", " + brew.state;
+        brewCard.appendChild(brewInfo);
 
-// somthingStupid();
+        var faveBrewAdd = document.createElement("span");
+        faveBrewAdd.setAttribute("class", "icon is-right");
+        faveBrewAdd.innerHTML = "<ion-icon name='add-circle-outline' size='small' class='addFaveBtn"+[i]+" icon is-right mx-auto my-auto'></ion-icon>";
+        brewCard.appendChild(faveBrewAdd);
+
+        brewColl.appendChild(brewCard);
+        
+        if (locations.lat != null){
+        
+            brewCoordArr.push(locations);
+        }
+    }
+
+    saveFavorite();
+    brewMap();
+}
 
 // localstorage for favorites
 function saveFavorite () {
+    
     let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
+    
     // connects to the pop up brewery data
-    let favorites = document.querySelectorAll(".brew-description")
+    let favorites = document.querySelectorAll(".brew-description");
+    
     // listener for the click to add to favorites
     favorites.forEach(favorites => { favorites.addEventListener("click", function(event){
+    
         // on click of context will start the adding process to local
-        let colllectFavs = event.target.textContent
-        // i dont really know but need another variable for it to be pushed or it will say push is not a function lol
-        //let please  = colllectFavs
+        let colllectFavs = event.target.textContent;
+    
         // pushes the context into the array
         favoriteSaves = favoriteSaves || [];
 
-        favoriteSaves.push(colllectFavs)
+        favoriteSaves.push(colllectFavs);
         // saves the clicked section to localstorage
-        localStorage.setItem("favorites", JSON.stringify(favoriteSaves))
+    
+        localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
+    
         //function to paste favorites
         pasteFavorites();
-        //loadRecentSearches();
+    
     });
     });
 };
     
-
 // paste our favorites from local to the page
 let pasteFavorites = function(){
+
     // holds everthing in our array
-    let storedFavorites = JSON.parse(localStorage.getItem("favorites"))
+    let storedFavorites = JSON.parse(localStorage.getItem("favorites"));
+    
     // connects to line (81) html
-    let favoritesConnect = document.querySelector("#fav")
+    let favoritesConnect = document.querySelector("#fav");
+    
     // creates a button to be appened to id=fav
-    let pasteFav = document.createElement("li")
-    pasteFav.setAttribute("class","favItem pt-2 pb-2 pl-5 mr-auto ml-auto")
+    let pasteFav = document.createElement("li");
+    pasteFav.setAttribute("class","favItem pt-2 pb-2 pl-5 mr-auto ml-auto");
 
     //make a loop to go through favorites saved
     for ( i = 0; i < storedFavorites.length; i++){
        
         // button text content
-        pasteFav.textContent = storedFavorites[i]
+        pasteFav.textContent = storedFavorites[i];
         
         // append button to id=fav
-        favoritesConnect.appendChild(pasteFav)
-        
+        favoritesConnect.appendChild(pasteFav);   
     }
-    console.log(favoriteSaves)
 }
 
 // Search Button Event
-
 searchBtn.addEventListener("click", (e) => {
+    
     formSubmit(e);
-    // brewColl.innerText = "";
 });
 
 document.addEventListener("keypress", (e) => {
+    
     if (e.key === "Enter") {
+    
         formSubmit(e);
-        // brewColl.innerText = "";
     }
 });
 
 var recentSearches;
 
 function searchFunction(){
+    
     recentSearches = [];
     recentSearches.push($("#searchBrew").val().toUpperCase());
     $('#searchBrew').val("");
     $('.past-brews').text("");
 
     if (recentSearches) {
+    
         var pastBrews = JSON.parse(window.localStorage.getItem("pastBrews"))||[];
-        var newBrew = recentSearches
+        var newBrew = recentSearches;
     };
     
-
     // save to local storage
     pastBrews.push(newBrew);
     window.localStorage.setItem("pastBrews",JSON.stringify(pastBrews));
-    console.log(pastBrews);
+
     loadRecentSearches();
 }
-
 
 var loadRecentSearches = function() {
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
 
     $.each(recentSearches, function (value,index) {
+    
         $('.past-brews').append("<li class='historyItem mb-3' onclick='displayBrew("+index+")'>" + index + '</li>');
-        console.log(value)
     });
-    //how to get innerHTML into the display brew call?
 }
 
-
 function displayLastSearch () {
+    
     let currentCity = searchBrew.value.toUpperCase();
+    
     if(!localStorage.getItem('currentCity') || JSON.parse(localStorage.getItem('currentCity')).length === 0){
+    
         window.localStorage.setItem('currentCity', JSON.stringify(currentCity));
         return;
     }
@@ -227,53 +235,63 @@ function displayLastSearch () {
 }
 
 function displayFavorites () {
+    
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
+    
     $.each(favoriteSaves, function (index,value) {
+    
         $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
     });
 }
 
 //Map
-
-
 function initMap() {
 
     map = new google.maps.Map(mapEl, {
-      center: { lat: 37.773972, lng: -122.431297 },
-      zoom: 11,
+      
+        center: { lat: 37.773972, lng: -122.431297 },
+        zoom: 11,
     });
 };
 
 function currentMap() {
+    
     let currentLoc = { lat: +currentLocation[0].lat, lng: +currentLocation[0].lng }
+    
     map = new google.maps.Map(mapEl, {
-      center: currentLoc,
-      zoom: 11,
+    
+        center: currentLoc,
+        zoom: 11,
     });
 
     let locationMark = new google.maps.Marker ({
+    
         position: currentLoc,
         map: map,
-        });
-
+    });
 };
 
 function brewMap() {
-    let centerLoc = { lat : +brewCoordArr[0].lat, lng: +brewCoordArr[0].lng
-    };  
+    
+    let centerLoc = { lat : +brewCoordArr[0].lat, lng: +brewCoordArr[0].lng};
+
     map = new google.maps.Map(mapEl, {
+    
         center: centerLoc,
         zoom: 10,
     }); 
+    
     for(var i=0; i< brewCoordArr.length; i++){
-     brew = { lat : +brewCoordArr[i].lat, lng: +brewCoordArr[i].lng
-     }  
+        
+        brew = { lat : +brewCoordArr[i].lat, lng: +brewCoordArr[i].lng
+    }  
      
     let brewMark = new google.maps.Marker ({
+    
         position: brew,
         map: map,
-        });
-};
+    });
+    };
 };
 
 getLocation();
