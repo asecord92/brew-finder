@@ -2,6 +2,11 @@ const searchBrew = document.getElementById("searchBrew");
 const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
+const clearFavs = document.getElementById("clearFavs");
+
+
+var favoriteSaves;
+var recentSearches;
 
 let brewCoordArr = [];
 let currentLocation= [];
@@ -34,7 +39,6 @@ function formSubmit(e) {
     let city = searchBrew.value.split(' ').join('_');
     
     if (!city) {
-        
         enterCityError();
     } else {
         
@@ -57,9 +61,8 @@ function getBrew(city) {
                     enterCityError(city);
                     searchBrew.value= "";
                 } else {
-                    
-                    displayBrew(brews);
                     searchFunction();
+                    displayBrew(brews);
                     searchBrew.value= "";
                 }
             })
@@ -129,12 +132,8 @@ function displayBrew (brews){
 
 // localstorage for favorites
 function saveFavorite () {
-    
-    favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
-    
-    // connects to the pop up brewery data
     let favorites = document.querySelectorAll(".brew-description");
-    
+    favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];  
     // listener for the click to add to favorites
      favorites.forEach(favorites => { favorites.addEventListener("click", function(event){
     
@@ -174,19 +173,17 @@ let pasteFavorites = function(){
 
 // Search Button Event
 searchBtn.addEventListener("click", (e) => {
-    
     formSubmit(e);
 });
 
 document.addEventListener("keypress", (e) => {
     
     if (e.key === "Enter") {
-    
         formSubmit(e);
     }
 });
 
-var recentSearches;
+
 
 function searchFunction(){
     
@@ -300,7 +297,7 @@ function currentMap() {
         position: currentLoc,
         map: map,
     });
-
+}
 
 function brewMap() {
     
@@ -323,9 +320,18 @@ function brewMap() {
         map: map,
         });
     };
-    };
-}
+};
 
+
+clearFavs.addEventListener("click", (e) => {
+    console.log("CLICKED");
+    favoriteSaves = [];
+    localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
+    pasteFavorites();
+});
+
+
+pasteFavorites();
 displayLastSearch();
 loadRecentSearches();
-pasteFavorites();
+
