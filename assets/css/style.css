@@ -23,7 +23,6 @@ header h1{
     text-align: start;
 }
 
-
 h2 {
     color: rgba(63, 17, 17, 100);
     font-size: 40px;
@@ -63,8 +62,6 @@ h3 {
     background-color: rgba(255, 248, 207, 100);
     text-align: center;
     border: 1px solid rgba(187, 187, 187, 100);
-
-    
 }
 
 #fav-brews {
@@ -96,15 +93,13 @@ h3 {
 .brewD {
     background-color: rgb(242, 204, 53);
     width: 90%;
-    border-radius: 10px;
-    
+    border-radius: 10px;    
 }
 
 #brew-name-sub .box {
     height: auto;
     padding: 0px;
-    margin-bottom: 20px;
-    
+    margin-bottom: 20px;    
 }
 
 #brew-name {
@@ -177,8 +172,6 @@ h3 {
         padding: 0px;
     }
 }
-
-
 
 @media screen and (max-width: 550px) {
     header {
