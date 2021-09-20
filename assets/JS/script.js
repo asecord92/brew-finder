@@ -2,6 +2,12 @@ const searchBrew = document.getElementById("searchBrew");
 const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
+const clearFavs = document.getElementById("clearFavs");
+const recentItems = document.getElementsByClassName("historyItem");
+const clearRecents = document.getElementById("clearRecents");
+
+var favoriteSaves;
+var recentSearches;
 
 let brewCoordArr = [];
 let currentLocation= [];
@@ -25,7 +31,19 @@ function showPosition(position) {
   currentLocation.push(location);
   currentMap();
 };
-  
+
+// Search Button Event
+searchBtn.addEventListener("click", (e) => {
+    formSubmit(e);
+});
+
+document.addEventListener("keypress", (e) => {
+    
+    if (e.key === "Enter") {
+        formSubmit(e);
+    }
+});
+
 //Get Value of Search Bar
 function formSubmit(e) {
     
@@ -34,7 +52,6 @@ function formSubmit(e) {
     let city = searchBrew.value.split(' ').join('_');
     
     if (!city) {
-        
         enterCityError();
     } else {
         
@@ -57,9 +74,8 @@ function getBrew(city) {
                     enterCityError(city);
                     searchBrew.value= "";
                 } else {
-                    
-                    displayBrew(brews);
                     searchFunction();
+                    displayBrew(brews);
                     searchBrew.value= "";
                 }
             })
@@ -74,6 +90,11 @@ function enterCityError() {
         
     modal.querySelector('.modal-background').addEventListener('click', function(e) {
         
+        e.preventDefault();
+        modal.classList.remove('is-active');
+    })
+
+    modal.querySelector('.modal-close').addEventListener('click', function(e) {
         e.preventDefault();
         modal.classList.remove('is-active');
     })
@@ -124,72 +145,46 @@ function displayBrew (brews){
 
 // localstorage for favorites
 function saveFavorite () {
-    
-    let favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];
-    
-    // connects to the pop up brewery data
     let favorites = document.querySelectorAll(".brew-description");
-    
+    favoriteSaves = JSON.parse(localStorage.getItem("favorites")) || [];  
     // listener for the click to add to favorites
-    favorites.forEach(favorites => { favorites.addEventListener("click", function(event){
+     favorites.forEach(favorites => { favorites.addEventListener("click", function(event){
     
         // on click of context will start the adding process to local
-        let colllectFavs = event.target.textContent;
-    
+        let collectFavs = event.target.innerHTML.split("<br>");
         // pushes the context into the array
         favoriteSaves = favoriteSaves || [];
-
-        favoriteSaves.push(colllectFavs);
+        favoriteSaves.push(collectFavs);
         // saves the clicked section to localstorage
-    
         localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
-    
+        
+
+        
+
         //function to paste favorites
         pasteFavorites();
     
-    });
+        });
     });
 };
-    
+
+function clearFavBox() {
+    document.getElementById("fav").innerHTML = "";
+}
+function clearRecentBox() {
+    document.getElementById("recents").innerHTML = ""
+}
 // paste our favorites from local to the page
 let pasteFavorites = function(){
-
-    // holds everthing in our array
-    let storedFavorites = JSON.parse(localStorage.getItem("favorites"));
+    clearFavBox();
     
-    // connects to line (81) html
-    let favoritesConnect = document.querySelector("#fav");
-    
-    // creates a button to be appened to id=fav
-    let pasteFav = document.createElement("li");
-    pasteFav.setAttribute("class","favItem pt-2 pb-2 pl-5 mr-auto ml-auto");
+    favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
 
-    //make a loop to go through favorites saved
-    for ( i = 0; i < storedFavorites.length; i++){
-       
-        // button text content
-        pasteFav.textContent = storedFavorites[i];
-        
-        // append button to id=fav
-        favoritesConnect.appendChild(pasteFav);   
-    }
+
+    $.each(removeDuplicates(favoriteSaves), function (index,value) {
+        $('.fav').append("<div class='favItem column is-two-fifths py-4 mx-auto''><a href='http://maps.google.com/?q="+ value.slice(1,2)+"' target='_blank'>" + value.slice(0,1)+"<br>"+ value.slice(2,3)+ '<ion-icon name="navigate-outline"></ion-icon></a></div>');
+    });
 }
-
-// Search Button Event
-searchBtn.addEventListener("click", (e) => {
-    
-    formSubmit(e);
-});
-
-document.addEventListener("keypress", (e) => {
-    
-    if (e.key === "Enter") {
-    
-        formSubmit(e);
-    }
-});
-
-var recentSearches;
 
 function searchFunction(){
     
@@ -212,11 +207,12 @@ function searchFunction(){
 }
 
 var loadRecentSearches = function() {
+    clearRecentBox()
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
-
-    $.each(recentSearches, function (value,index) {
     
-        $('.past-brews').append("<li class='historyItem mb-3' onclick='displayBrew("+index+")'>" + index + '</li>');
+    $.each(removeDuplicates(recentSearches), function (value,index) {
+    
+        $('.past-brews').append("<li class='historyItem mb-3'>" + index + '</li>');
     });
 }
 
@@ -234,15 +230,49 @@ function displayLastSearch () {
     getBrew(lastSearch);
 }
 
-function displayFavorites () {
+function removeDuplicates(array){
+    const result = [];
+    const duplicatesIndices = [];
+
+    // Loop through each item in the original array
+    array.forEach((current, index) => {
     
-    favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
+        if (duplicatesIndices.includes(index)) return;
     
-    $.each(favoriteSaves, function (index,value) {
+        result.push(current);
     
-        $('.fav').append("<li class='favItem pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew("+index+")'>" + value + '</li>');
-    });
-}
+        // Loop through each other item on array after the current one
+        for (let comparisonIndex = index + 1; comparisonIndex < array.length; comparisonIndex++) {
+        
+            const comparison = array[comparisonIndex];
+            const currentKeys = Object.keys(current);
+            const comparisonKeys = Object.keys(comparison);
+            
+            // Check number of keys in objects
+            if (currentKeys.length !== comparisonKeys.length) continue;
+            
+            // Check key names
+            const currentKeysString = currentKeys.sort().join("").toLowerCase();
+            const comparisonKeysString = comparisonKeys.sort().join("").toLowerCase();
+            if (currentKeysString !== comparisonKeysString) continue;
+            
+            // Check values
+            let valuesEqual = true;
+            for (let i = 0; i < currentKeys.length; i++) {
+                const key = currentKeys[i];
+                if ( current[key] !== comparison[key] ) {
+                    valuesEqual = false;
+                    break;
+                }
+            }
+            if (valuesEqual) duplicatesIndices.push(comparisonIndex);
+            
+        } // end for loop
+
+    }); // end array.forEach()
+    return result;
+};
+
 
 //Map
 function initMap() {
@@ -269,7 +299,7 @@ function currentMap() {
         position: currentLoc,
         map: map,
     });
-};
+}
 
 function brewMap() {
     
@@ -290,11 +320,33 @@ function brewMap() {
     
         position: brew,
         map: map,
-    });
+        });
     };
 };
 
-getLocation();
+
+clearFavs.addEventListener("click", (e) => {
+    favoriteSaves = [];
+    localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
+    pasteFavorites();
+})
+
+clearRecents.addEventListener("click",(e) => {
+    recentSearches = [];
+    window.localStorage.setItem("pastBrews",JSON.stringify(recentSearches));
+    loadRecentSearches();
+})
+
+
+$(document).on('click','.historyItem', function(evt) {
+    var value = $(this).text();
+    var input = $('#searchBrew');
+    input.val(input.val() +value);
+    // evt.preventDefault();
+    formSubmit();
+});
+
+pasteFavorites();
 displayLastSearch();
 loadRecentSearches();
-displayFavorites();
+

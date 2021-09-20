@@ -61,7 +61,8 @@
                     </section>
                     <section id="recent-searches" class="box mt-6 mr-2">
                         <h3>Recent Searches</h3>
-                        <div class="past-brews"></div>
+                        <div class="past-brews" id="recents"></div>
+                        <h4 id="clearRecents" class="button is-rounded is-fullwidth is-light is-danger"><ion-icon name="close-circle-outline"></ion-icon>clear recents</h4>
                     </section>
                 </div>
                 <div class="column is-8">
@@ -77,10 +78,11 @@
                             ></div>
                         </section>
                     </div>
-                    <div class=" is-gapless">
-                        <section id="fav-brews" class="column is-full m-2 box">
-                            <h3>Favorites:</h3>
-                            <div id="fav" class="fav"></div>
+                    <div class=" is-gapless ">
+                        <section id="fav-brews" class="column is-full m-2 box">                           
+                                <h2 class="">Favorites</h2>
+                                <div id="fav" class="fav columns is-multiline is-centered has-text-centered"></div>
+                                <h4 id="clearFavs" class="button is-rounded is-two-thirds is-light is-danger is-fullwidth"><ion-icon name="close-circle-outline"></ion-icon>clear favorites</h4>
                         </section>
                     </div>
                 </div>

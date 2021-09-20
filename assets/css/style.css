@@ -35,6 +35,11 @@ h3 {
     font-size: 28px;   
 }
 
+h4 {
+    color: rgba(63, 17, 17, 100);
+    font-size: 15px;  
+}
+
 #find-brew {
     height: 175px;
     border-radius: 20px;
@@ -139,10 +144,24 @@ h3 {
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: rgb(242, 204, 53);
-    width: 90%;
+    width: 60%;
     border-radius: 15px;
     
 }
+.fav a {
+    text-decoration: none;
+    color: #4a4a4a;
+}
+
+.item{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between
+  }
+
+.columns button{
+    margin-top: auto;
+  }
 
 @media screen and (max-width: 768px) {
     header h1{
