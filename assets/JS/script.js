@@ -4,7 +4,7 @@ const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 const clearFavs = document.getElementById("clearFavs");
 const recentItems = document.getElementsByClassName("historyItem");
-
+const clearRecents = document.getElementById("clearRecents");
 
 var favoriteSaves;
 var recentSearches;
@@ -168,19 +168,21 @@ function saveFavorite () {
     });
 };
 
-function clearBox() {
+function clearFavBox() {
     document.getElementById("fav").innerHTML = "";
 }
-
+function clearRecentBox() {
+    document.getElementById("recents").innerHTML = ""
+}
 // paste our favorites from local to the page
 let pasteFavorites = function(){
-    clearBox();
+    clearFavBox();
     
     favoriteSaves = JSON.parse(localStorage.getItem("favorites"));
 
 
     $.each(removeDuplicates(favoriteSaves), function (index,value) {
-        $('.fav').append("<div class='favItem column is-half pt-2 pb-2 pl-5 mr-auto ml-auto' onclick='displayBrew(+index+)'><a href='http://maps.google.com/?q="+ value.slice(1,2)+"' target='_blank'>" + value.slice(0,1)+"<br>"+ value.slice(2,3)+ '</a></div>');
+        $('.fav').append("<div class='favItem column is-two-fifths py-4 mx-auto''><a href='http://maps.google.com/?q="+ value.slice(1,2)+"' target='_blank'>" + value.slice(0,1)+"<br>"+ value.slice(2,3)+ '<ion-icon name="navigate-outline"></ion-icon></a></div>');
     });
 }
 
@@ -205,6 +207,7 @@ function searchFunction(){
 }
 
 var loadRecentSearches = function() {
+    clearRecentBox()
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
     
     $.each(removeDuplicates(recentSearches), function (value,index) {
@@ -326,7 +329,13 @@ clearFavs.addEventListener("click", (e) => {
     favoriteSaves = [];
     localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
     pasteFavorites();
-});
+})
+
+clearRecents.addEventListener("click",(e) => {
+    recentSearches = [];
+    window.localStorage.setItem("pastBrews",JSON.stringify(recentSearches));
+    loadRecentSearches();
+})
 
 
 $(document).on('click','.historyItem', function(evt) {
@@ -335,7 +344,6 @@ $(document).on('click','.historyItem', function(evt) {
     input.val(input.val() +value);
     // evt.preventDefault();
     formSubmit();
-    console.log(value+" clicked")
 });
 
 pasteFavorites();
