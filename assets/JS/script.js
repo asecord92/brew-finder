@@ -3,6 +3,7 @@ const searchBtn = document.getElementById("searchBtn");
 const brewColl = document.getElementById("brew-name-sub");
 const mapEl = document.getElementById("map");
 const clearFavs = document.getElementById("clearFavs");
+const recentItems = document.getElementsByClassName("historyItem");
 
 
 var favoriteSaves;
@@ -30,7 +31,19 @@ function showPosition(position) {
   currentLocation.push(location);
   currentMap();
 };
-  
+
+// Search Button Event
+searchBtn.addEventListener("click", (e) => {
+    formSubmit(e);
+});
+
+document.addEventListener("keypress", (e) => {
+    
+    if (e.key === "Enter") {
+        formSubmit(e);
+    }
+});
+
 //Get Value of Search Bar
 function formSubmit(e) {
     
@@ -171,20 +184,6 @@ let pasteFavorites = function(){
     });
 }
 
-// Search Button Event
-searchBtn.addEventListener("click", (e) => {
-    formSubmit(e);
-});
-
-document.addEventListener("keypress", (e) => {
-    
-    if (e.key === "Enter") {
-        formSubmit(e);
-    }
-});
-
-
-
 function searchFunction(){
     
     recentSearches = [];
@@ -207,10 +206,10 @@ function searchFunction(){
 
 var loadRecentSearches = function() {
     recentSearches = JSON.parse(window.localStorage.getItem("pastBrews"));
-
-    $.each(recentSearches, function (value,index) {
     
-        $('.past-brews').append("<li class='historyItem mb-3' onclick='displayBrew("+index+")'>" + index + '</li>');
+    $.each(removeDuplicates(recentSearches), function (value,index) {
+    
+        $('.past-brews').append("<li class='historyItem mb-3'>" + index + '</li>');
     });
 }
 
@@ -324,12 +323,20 @@ function brewMap() {
 
 
 clearFavs.addEventListener("click", (e) => {
-    console.log("CLICKED");
     favoriteSaves = [];
     localStorage.setItem("favorites", JSON.stringify(favoriteSaves));
     pasteFavorites();
 });
 
+
+$(document).on('click','.historyItem', function(evt) {
+    var value = $(this).text();
+    var input = $('#searchBrew');
+    input.val(input.val() +value);
+    // evt.preventDefault();
+    formSubmit();
+    console.log(value+" clicked")
+});
 
 pasteFavorites();
 displayLastSearch();
