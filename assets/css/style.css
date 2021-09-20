@@ -139,11 +139,14 @@ h3 {
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: rgb(242, 204, 53);
-    width: 90%;
+    width: 85%;
     border-radius: 15px;
     
 }
-
+.fav a {
+    text-decoration: none;
+    color: #4a4a4a;
+}
 @media screen and (max-width: 768px) {
     header h1{
         font-size: 96px;
